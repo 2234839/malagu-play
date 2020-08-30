@@ -1,0 +1,7 @@
+node_modules
+
+.malagu
+
+malagu-dev.yml
+
+*.log

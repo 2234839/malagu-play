@@ -1,0 +1,39 @@
+{
+  "name": "fc-sample-app",
+  "keywords": [
+    "malagu-component"
+  ],
+  "version": "0.0.0",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@alicloud/log": "^1.2.1",
+    "@malagu/fc-adapter": "latest",
+    "@malagu/react": "latest",
+    "@malagu/rpc": "latest",
+    "@malagu/serve-static": "latest",
+    "@types/node": "^14.6.2",
+    "aliyun-sdk": "^1.12.3",
+    "class-transformer": "^0.3.1"
+  },
+  "devDependencies": {
+    "@malagu/cli": "latest",
+    "@types/react": "^16.9.48",
+    "@types/react-dom": "^16.8.5",
+    "@types/react-router": "^5.1.7",
+    "@types/react-router-dom": "^5.1.5",
+    "rimraf": "^2.6.3"
+  },
+  "scripts": {
+    "clean": "rimraf lib dist .malagu",
+    "build": "malagu build",
+    "start": "malagu serve -m dev",
+    "deploy": "malagu deploy -m test",
+    "deploy:test": "malagu deploy -m test",
+    "deploy:pre": "malagu deploy -m pre",
+    "deploy:release": "malagu deploy -m release"
+  }
+}

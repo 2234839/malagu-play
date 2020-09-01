@@ -16,6 +16,7 @@
     "@malagu/rpc": "latest",
     "@malagu/serve-static": "latest",
     "@types/node": "^14.6.2",
+    "@vue/composition-api": "^1.0.0-beta.11",
     "aliyun-sdk": "^1.12.3",
     "class-transformer": "^0.3.1",
     "svelte": "^3.24.1",

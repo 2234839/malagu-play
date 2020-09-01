@@ -1,20 +1,24 @@
 deployConfig:
   name: test ## 测试环境
   customDomain:
-    name: api.shenzilong.cn
-    protocol: HTTP
-    routeConfig:
-      routes:
-        - path: "/malagu/test/*"
-          serviceName: ${deployConfig.service.name}
-          qualifier: ${deployConfig.alias.name}
-          functionName: ${deployConfig.function.name}
+      name: play.malagu.example
+      protocol: HTTP
+      routeConfig:
+          routes:
+              - path: '/*'
+                serviceName: ${deployConfig.service.name}
+                qualifier: ${deployConfig.alias.name}
+                functionName: ${deployConfig.function.name}
 
 malagu:
   server:
-    path: /malagu/test/
+      path: /
   includeModules: true
+  aliyun:
+      accessKeyId: "${env.accessKeyId?:''}"
+      secretAccessKey: "${env.secretAccessKey?:''}" #
+      endpoint: "${env.endpoint?:''}"
   webpack:
-    config:
-      externals:
-        - aliyun-sdk
+      config:
+          externals:
+              - aliyun-sdk

@@ -18,9 +18,10 @@ export class LogItem {
   客户ip: "175.24.69.228";
 
   @Expose({ name: "__tag__:__receive_time__" })
-  接收时间: "1598584501";
+  @Transform((v) => new Date(v * 1000), { toClassOnly })
+  接收时间: Date;
   __time__: "1598584501";
-//   __topic__: "";
+  //   __topic__: "";
 
   @Transform((v) => (v ? JSON.parse(v) : {}), { toClassOnly })
   content: "";
@@ -34,12 +35,12 @@ export class LogItem {
   历史请求: Request[];
 
   @Transform((v) => (v ? JSON.parse(v) : {}), { toClassOnly })
-  label: '{"type":"打开页面","info":""}';
+  label: any;
 
   /** 当前页面地址 */
   route: "pages/home/login/login";
 
   @Transform((v) => (v ? JSON.parse(v) : {}), { toClassOnly })
-  user: "{}";
+  user: { account?: string; name?: string };
   uuid: "1598584496467-72a7b6748c2e";
 }

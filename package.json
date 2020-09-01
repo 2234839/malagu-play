@@ -17,7 +17,12 @@
     "@malagu/serve-static": "latest",
     "@types/node": "^14.6.2",
     "aliyun-sdk": "^1.12.3",
-    "class-transformer": "^0.3.1"
+    "class-transformer": "^0.3.1",
+    "svelte": "^3.24.1",
+    "svelte-loader": "^2.13.6",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.12"
   },
   "devDependencies": {
     "@malagu/cli": "latest",

@@ -14,7 +14,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react",
-    "target": "es5",
+    "target": "ESNext",
     "lib": [
       "es6",
       "dom"

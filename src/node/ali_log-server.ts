@@ -21,10 +21,6 @@ export class AliLogServerImpl implements AliLogServer {
           to: Math.floor(params.to / 1000),
         },
         function (error: any, data: any) {
-          if (data) {
-            const list = Object.keys(data.body).map((k) => data.body[k]);
-            data.body = plainToClass(LogItem, list);
-          }
           resolve(error || data);
         },
       );

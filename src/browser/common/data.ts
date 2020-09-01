@@ -1,4 +1,12 @@
-import { computed, reactive, watch, watchEffect } from '@vue/composition-api';
+import VueCompositionAPI, {
+    computed,
+    reactive,
+    ref,
+    watch,
+    watchEffect,
+} from '@vue/composition-api';
+import Vue from 'vue';
+Vue.use(VueCompositionAPI);
 import { readable } from 'svelte/store';
 
 const air = Symbol('空格子');
@@ -13,66 +21,64 @@ class Box {
     state = air as chessPieceType;
 }
 
-export const GameState = reactive({
-    table: [0, 0, 0, 0, 0, 0, 0, 0, 0].map(() => new Box()),
-});
-
-export const winner = computed(() =>
-    calculateWinner(GameState.table.map(el => el.state)),
-);
-
-/** 点击某个格子 */
-export function tapBox(i: number) {
-    if (winner.value) {
-        return console.log('已决出胜负');
-    }
-
-    const c = GameState.table[i];
-    const v = c.state;
-
-    if (v !== air) {
-        return console.log('这里已经被占用了');
-    } else {
-        const i = GameState.table.filter(el => el.state !== air).length;
-        c.state = i % 2 === 0 ? white : black;
-    }
-}
-
-export const _GameState = readable(GameState, set => {
-    const destroy = watch(
-        GameState,
-        () => {
-            console.log('[GameState]', GameState);
-            set(GameState);
-        },
-        { deep: true, immediate: true },
+export function newGame() {
+    const table = ref([0, 0, 0, 0, 0, 0, 0, 0, 0].map(() => new Box()));
+    const winner = computed(() =>
+        calculateWinner(table.value.map(el => el.state)),
     );
-    return () => destroy();
-});
+    /** 点击某个格子 */
+    function tapBox(i: number) {
+        if (winner.value) {
+            return console.log('已决出胜负');
+        }
 
-function calculateWinner(squares: chessPieceType[]) {
-    const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-    for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (
-            squares[a] &&
-            squares[a] === squares[b] &&
-            squares[a] === squares[c]
-        ) {
-            if (squares[a] === air) {
-                continue;
-            }
-            return squares[a];
+        const c = table.value[i];
+        const v = c.state;
+
+        if (v !== air) {
+            return console.log('这里已经被占用了');
+        } else {
+            const i = table.value.filter(el => el.state !== air).length;
+            c.state = i % 2 === 0 ? white : black;
         }
     }
-    return null;
+    /** 计算胜利者 */
+    function calculateWinner(squares: chessPieceType[]) {
+        const lines = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+        for (let i = 0; i < lines.length; i++) {
+            const [a, b, c] = lines[i];
+            if (
+                squares[a] &&
+                squares[a] === squares[b] &&
+                squares[a] === squares[c]
+            ) {
+                if (squares[a] === air) {
+                    continue;
+                }
+                return squares[a];
+            }
+        }
+        return null;
+    }
+    /** 提供一份数据给svelte */
+    const svelteState = readable(
+        { table: table.value, winner: winner.value },
+        set => {
+            watchEffect(() => {
+                set({ table: table.value, winner: winner.value });
+            });
+        },
+    );
+    return { table, winner, tapBox, svelteState };
 }
+
+export const defaultGame = newGame();

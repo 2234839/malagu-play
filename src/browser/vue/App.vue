@@ -2,10 +2,10 @@
     <div>
         <div class="c-board">
             <div
-                v-for="(item, index) of GameState.table"
+                v-for="(item, index) of table"
                 :key="index"
                 class="c-board-box"
-                @click="() => onClickBox(index)"
+                @click="() => tapBox(index)"
             >
                 {{
                     chessPieceType.air === item.state

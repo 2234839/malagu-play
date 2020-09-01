@@ -27,6 +27,13 @@
                     : '执黑子（⚫）者胜'
             }}
         </div>
+        <div class="c-info">
+            下一颗棋子：{{
+                nextChessPiece === chessPieceType.white
+                    ? '白子（⚪）'
+                    : '黑子（⚫）'
+            }}
+        </div>
     </div>
 </template>
 

@@ -30,5 +30,10 @@
     {/each}
 </div>
 <div class="c-info">
-    胜利者：{$s.winner === null ? '' : $s.winner === chessPieceType.white ? '执白子（⚪）者胜' : '执黑子（⚫）者胜'}
+    <div>
+        胜利者：{$s.winner === null ? '' : $s.winner === chessPieceType.white ? '执白子（⚪）者胜' : '执黑子（⚫）者胜'}
+    </div>
+    <div>
+        下一颗棋子：{$s.nextChessPiece === chessPieceType.white ? '白子（⚪）' : '黑子（⚫）'}
+    </div>
 </div>

@@ -26,6 +26,11 @@ export function newGame() {
     const winner = computed(() =>
         calculateWinner(table.value.map(el => el.state)),
     );
+    const nextChessPiece = computed(() =>
+        table.value.filter(el => el.state !== air).length % 2 === 0
+            ? white
+            : black,
+    );
     /** 点击某个格子 */
     function tapBox(i: number) {
         if (winner.value) {
@@ -38,8 +43,7 @@ export function newGame() {
         if (v !== air) {
             return console.log('这里已经被占用了');
         } else {
-            const i = table.value.filter(el => el.state !== air).length;
-            c.state = i % 2 === 0 ? white : black;
+            c.state = nextChessPiece.value;
         }
     }
     /** 计算胜利者 */
@@ -71,14 +75,22 @@ export function newGame() {
     }
     /** 提供一份数据给svelte */
     const svelteState = readable(
-        { table: table.value, winner: winner.value },
+        {
+            table: table.value,
+            winner: winner.value,
+            nextChessPiece: nextChessPiece.value,
+        },
         set => {
             watchEffect(() => {
-                set({ table: table.value, winner: winner.value });
+                set({
+                    table: table.value,
+                    winner: winner.value,
+                    nextChessPiece: nextChessPiece.value,
+                });
             });
         },
     );
-    return { table, winner, tapBox, svelteState };
+    return { table, winner, tapBox, nextChessPiece, svelteState };
 }
 
 export const defaultGame = newGame();
